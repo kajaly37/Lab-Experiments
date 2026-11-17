@@ -1,0 +1,194 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+struct Patient {
+    int id;
+    string name;
+    int age;
+    string gender;
+    string phone;
+    string disease;
+};
+
+vector<Patient> patients;
+int nextId = 1;
+
+// Add Patient
+void addPatient() {
+    Patient p;
+
+    p.id = nextId++;
+
+    cout << "\nEnter Patient Name: ";
+    cin.ignore();
+    getline(cin, p.name);
+
+    cout << "Enter Age: ";
+    cin >> p.age;
+
+    cout << "Enter Gender: ";
+    cin >> p.gender;
+
+    cout << "Enter Phone Number: ";
+    cin >> p.phone;
+
+    cout << "Enter Disease: ";
+    cin.ignore();
+    getline(cin, p.disease);
+
+    patients.push_back(p);
+
+    cout << "\nPatient added successfully!\n";
+}
+
+// Display Patients
+void displayPatients() {
+    if (patients.empty()) {
+        cout << "\nNo patient records found.\n";
+        return;
+    }
+
+    cout << "\n===== Patient Records =====\n";
+
+    for (const Patient &p : patients) {
+        cout << "\nPatient ID : " << p.id;
+        cout << "\nName       : " << p.name;
+        cout << "\nAge        : " << p.age;
+        cout << "\nGender     : " << p.gender;
+        cout << "\nPhone      : " << p.phone;
+        cout << "\nDisease    : " << p.disease;
+        cout << "\n---------------------------";
+    }
+}
+
+// Search Patient
+void searchPatient() {
+    int id;
+
+    cout << "\nEnter Patient ID to search: ";
+    cin >> id;
+
+    for (const Patient &p : patients) {
+        if (p.id == id) {
+            cout << "\n===== Patient Found =====\n";
+            cout << "ID       : " << p.id << endl;
+            cout << "Name     : " << p.name << endl;
+            cout << "Age      : " << p.age << endl;
+            cout << "Gender   : " << p.gender << endl;
+            cout << "Phone    : " << p.phone << endl;
+            cout << "Disease  : " << p.disease << endl;
+            return;
+        }
+    }
+
+    cout << "\nPatient not found.\n";
+}
+
+// Update Patient
+void updatePatient() {
+    int id;
+
+    cout << "\nEnter Patient ID to update: ";
+    cin >> id;
+
+    for (Patient &p : patients) {
+        if (p.id == id) {
+
+            cout << "Enter New Name: ";
+            cin.ignore();
+            getline(cin, p.name);
+
+            cout << "Enter New Age: ";
+            cin >> p.age;
+
+            cout << "Enter New Gender: ";
+            cin >> p.gender;
+
+            cout << "Enter New Phone: ";
+            cin >> p.phone;
+
+            cout << "Enter New Disease: ";
+            cin.ignore();
+            getline(cin, p.disease);
+
+            cout << "\nPatient updated successfully!\n";
+            return;
+        }
+    }
+
+    cout << "\nPatient not found.\n";
+}
+
+// Delete Patient
+void deletePatient() {
+    int id;
+
+    cout << "\nEnter Patient ID to delete: ";
+    cin >> id;
+
+    for (int i = 0; i < patients.size(); i++) {
+
+        if (patients[i].id == id) {
+            patients.erase(patients.begin() + i);
+
+            cout << "\nPatient deleted successfully!\n";
+            return;
+        }
+    }
+
+    cout << "\nPatient not found.\n";
+}
+
+// Main Function
+int main() {
+
+    int choice;
+
+    do {
+        cout << "\n\n===== HOSPITAL PATIENT MANAGEMENT SYSTEM =====\n";
+        cout << "1. Add Patient\n";
+        cout << "2. View Patients\n";
+        cout << "3. Search Patient\n";
+        cout << "4. Update Patient\n";
+        cout << "5. Delete Patient\n";
+        cout << "6. Exit\n";
+
+        cout << "\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+
+            case 1:
+                addPatient();
+                break;
+
+            case 2:
+                displayPatients();
+                break;
+
+            case 3:
+                searchPatient();
+                break;
+
+            case 4:
+                updatePatient();
+                break;
+
+            case 5:
+                deletePatient();
+                break;
+
+            case 6:
+                cout << "\nThank you!\n";
+                break;
+
+            default:
+                cout << "\nInvalid choice!\n";
+        }
+
+    } while (choice != 6);
+
+    return 0;
+}
